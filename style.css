@@ -1,0 +1,265 @@
+/* 删除错误的图标初始化代码 */
+/* :where([class^="ri-"])::before { content: "\f3c2"; } */
+
+/* 添加正确的图标样式 */
+[class^="ri-"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.editor-container {
+    flex: 1;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    margin: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.resizer {
+    width: 4px;
+    cursor: col-resize;
+    background-color: #e5e7eb;
+    transition: background-color 0.2s;
+}
+.resizer:hover, .resizer.active {
+    background-color: #3b82f6;
+}
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 5px;
+    background: #e5e7eb;
+    outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: none;
+}
+.custom-checkbox {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.checkmark {
+    position: relative;
+    height: 18px;
+    width: 18px;
+    background-color: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+}
+.custom-checkbox input:checked ~ .checkmark {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.custom-checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+.custom-checkbox .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.custom-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+.custom-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    cursor: pointer;
+}
+.custom-switch input:checked {
+    background-color: #3b82f6;
+}
+
+/* 图层控制组件样式 */
+.bg-library, .sprite-library, .element-library {
+    min-height: 0;
+    max-height: 0;
+    overflow: hidden;
+    background: white;
+    border: 1px dashed #e5e7eb;
+    border-radius: 8px;
+    padding: 0 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.bg-library:not(.hidden), 
+.sprite-library:not(.hidden), 
+.element-library:not(.hidden) {
+    min-height: 80px;
+    max-height: 200px;
+    padding: 8px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+/* 缩略图容器样式 */
+.bg-item, .sprite-item, .element-item {
+    aspect-ratio: 1;
+    width: 100%;
+    max-width: 60px;
+    height: auto;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    position: relative;
+}
+
+.bg-item:hover, .sprite-item:hover, .element-item:hover {
+    border-color: #3b82f6;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.bg-item.selected, .sprite-item.selected, .element-item.selected {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.bg-item.selected::after, .sprite-item.selected::after, .element-item.selected::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 12px;
+    height: 12px;
+    background: #3b82f6;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.bg-item img, .sprite-item img, .element-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+}
+
+/* 滚动条样式优化 */
+.bg-library::-webkit-scrollbar,
+.sprite-library::-webkit-scrollbar,
+.element-library::-webkit-scrollbar {
+    width: 4px;
+}
+
+.bg-library::-webkit-scrollbar-track,
+.sprite-library::-webkit-scrollbar-track,
+.element-library::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 2px;
+}
+
+.bg-library::-webkit-scrollbar-thumb,
+.sprite-library::-webkit-scrollbar-thumb,
+.element-library::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 2px;
+}
+
+.bg-library::-webkit-scrollbar-thumb:hover,
+.sprite-library::-webkit-scrollbar-thumb:hover,
+.element-library::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* 输入控件样式优化 */
+input[type="text"], input[type="number"], select {
+    border-color: #e5e7eb;
+    transition: all 0.2s;
+    background: #ffffff;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, select:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+input[type="color"] {
+    border: none;
+    padding: 0;
+    background: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+}
+
+/* 滚动条样式优化 */
+.overflow-y-auto::-webkit-scrollbar {
+    width: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 2px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+.ri-arrow-down-s-line {
+    transition: transform 0.3s ease;
+}
+
+/* 画布样式 */
+#mainCanvas {
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+}
